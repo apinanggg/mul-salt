@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datatables AppzStory</title>
+    <link rel="shortcut icon" type="image/x-icon" href="../icon.ico">
+    <!-- bootstrap 5 -->
+    <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" >
+    <!-- bootstrap4-toggle -->
+    <link rel="stylesheet" href="../node_modules/bootstrap4-toggle/css/bootstrap4-toggle.min.css">
+    <!-- dataTables.bootstrap5 -->
+    <link rel="stylesheet" href="../node_modules/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+    <!-- responsive.dataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css">
+    <!-- sweetalert2 -->
+    <link rel="stylesheet" href="../node_modules/sweetalert2/dist/sweetalert2.min.css">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+
+    <style>
+        .dataTables_scrollHeadInner, .table{
+            width:100% !important
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header border-0 pt-4">
+                        <h4> 
+                            <i class="fas fa-shopping-cart"></i> 
+                            เพิ่มประเภทสินค้า
+                        </h4>
+                    </div>
+                    <div class="card-body">
+                        <a href="./" class="btn btn-info btn-sm my-2 mx-md-0 px-4" id="createItem">
+                            ประเภทสินค้า <i class="far fa-list-alt"></i>
+                        </a>
+                        <a href="../" class="btn btn-success btn-sm my-2 mx-md-0 px-4">
+                            จัดการสินค้า <i class="fas fa-list-alt"></i>
+                        </a>
+                        <form id="formData">
+                            <div class="row g-3 justify-content-center">
+                                <div class="form-group col-md-3">
+                                    <label for="cat_name">ชื่อประเภท</label>
+                                    <input type="text" class="form-control" name="cat_name" id="cat_name" placeholder="ชื่อประเภท" required >
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <label for="cat_title">คำอธิบาย</label>
+                                    <input type="text" class="form-control" name="cat_title" id="cat_title" placeholder="คำอธิบาย" required >
+                                </div>
+                                <div class="col-12">
+                                    <button type="submit" class="btn btn-primary btn-sm float-end">บันทึกข้อมูล</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jquery3.6 -->
+    <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- bootstrap5 -->
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- jquery.dataTables -->
+    <script src="../node_modules/datatables.net/js/jquery.dataTables.min.js"></script>
+    <!-- dataTables.bootstrap5 -->
+	<script src="../node_modules/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <!-- dataTables.responsive -->
+    <script src="../node_modules/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
+    <!-- bootstrap4-toggle -->
+    <script src="../node_modules/bootstrap4-toggle/js/bootstrap4-toggle.min.js"></script>
+    <!-- sweetalert2 -->
+    <script src="../node_modules/sweetalert2/dist/sweetalert2.all.js"></script>
+
+    <script>
+        $(function() {
+            /** Function on Submit Form */
+            $('#formData').on('submit', function (e) {
+                e.preventDefault()
+                /** สร้าง Ajax เพื่อยิง Request ด้วย Method POST สำหรับบันทึกข้อมูล */
+                $.ajax({
+                    type: 'POST',
+                    url: '../service/category/create.php',
+                    data: $(this).serialize() //ดึงข้อมูลจาก form มาใช้งานด้วย serialize
+                }).done(function(resp, textStatus, jqXHR){ // เมื่อสำเร็จแสดง Sweet Alert Success ขึ้นมา
+                    Swal.fire({
+                        text: resp.message,
+                        icon: 'success',
+                        confirmButtonText: 'ตกลง',
+                    }).then(() => {
+                        location.assign('./')
+                    })
+                }).fail(function(jqXHR, textStatus, errorThrown){ // เมื่อไม่สำเร็จแสดง Sweet Alert Error ขึ้นมา
+                    Swal.fire({ 
+                        text: jqXHR.responseJSON.message, 
+                        icon: 'error', 
+                        confirmButtonText: 'ตกลง', 
+                    })
+                })
+            })
+        })
+    </script>
+</body>
+</html>
