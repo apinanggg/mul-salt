@@ -14,12 +14,18 @@ require_once '../helper.class.php';
 if($_SERVER['REQUEST_METHOD'] === "PUT") {
     /** ดึงข้อมูล Method PUT มาใช้งาน */
     parse_str(file_get_contents("php://input"), $_PUT);
+
+
+    $cat_id =  substr($_PUT['cat_id'],10,-10);
+
+   $new_id =  base64_decode($cat_id);
+
     /** สร้างชุดข้อมูล Array เพื่อเก็บเข้าฐานข้อมูล */
     $params = array(
         'cat_name' => Helper::clean($_PUT['cat_name']),
         'cat_title' => Helper::clean($_PUT['cat_title']),
         'updated_at' => date("Y-m-d h:i:s"),
-        'cat_id' => Helper::clean($_PUT['cat_id'])
+        'cat_id' =>  $new_id
     );
     /** เรียกใช้งาน Method query สำหรับประมวลผลคำสั่ง SQL */
     $affected = DB::query("UPDATE categories SET 

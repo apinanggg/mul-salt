@@ -136,21 +136,23 @@
                 /** จัดข้อมูล Response ใหม่ ให้พร้อมใช้งาน */
                 arr1.forEach(function (item, index){
                     
-                    let result = item.cat_id.substr(10);
-                    
-                    var cat_id = b64DecodeUnicode(result)
+                    // let result = item.cat_id.slice(10, -10);
+
+                    // var cat_id = b64DecodeUnicode(result)
+
                     var cat_name = item.cat_name
                     var cat_title = item.cat_title
                     var updated_at = item.updated_at
                    
+                  
                     tableData.push([    
                         `${index + 1}`,
                         `<span>${cat_name}</span>`,
                         `<span>${cat_title}</span>`,
                         `<span>${updated_at}</span>`,
                         `<div class="btn-group" role="group">
-                            <a href="edit.html?id=${cat_id}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> แก้ไข </a>
-                            <button class="btn btn-danger btn-sm" id="deleteItem" data-id="${cat_id}"><i class="fas fa-trash-alt"></i> ลบ </button>
+                            <a href="edit.html?id=${item.cat_id}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> แก้ไข </a>
+                            <button class="btn btn-danger btn-sm" id="deleteItem" data-id="${item.cat_id}"><i class="fas fa-trash-alt"></i> ลบ </button>
                         </div>`
                     ])
                 })

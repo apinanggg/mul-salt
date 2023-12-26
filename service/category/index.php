@@ -18,7 +18,8 @@ if($_SERVER['REQUEST_METHOD'] === "GET") {
 
     foreach ($categories as $Index => $value){
         $rand = generateRandomString();
-        $response[$Index]['cat_id'] = $rand.base64_encode($value['cat_id']);
+        $rand2 = generateRandomString();
+        $response[$Index]['cat_id'] = $rand.base64_encode($value['cat_id']).$rand2;
         $response[$Index]['cat_title'] = ($value['cat_title']); 
         $response[$Index]['cat_name']= ($value['cat_name']);
         $response[$Index]['updated_at']= ($value['updated_at']);         
@@ -43,3 +44,5 @@ function generateRandomString($length = 10) {
     }
     return $randomString;
 }
+
+

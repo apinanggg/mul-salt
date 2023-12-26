@@ -83,6 +83,13 @@
         $(function() {
             /** ดึงค่า params id มาใช้งานเพื่อหาข้อมูล */
             let params = new URL(location.href).searchParams.get("id")
+
+            // console.log(params)
+
+            // let result = params.slice(10, -10);
+
+            // var cat_id = b64DecodeUnicode(result)
+
             /** สร้าง Ajax เพื่อยิง Request ด้วย Method GET สำหรับดึงข้อมูล */
             $.ajax({
                 type: "GET",
@@ -131,6 +138,15 @@
             })
         })
            
+
+        function b64DecodeUnicode(str) {
+    // Going backwards: from bytestream, to percent-encoding, to original string.
+    return decodeURIComponent(atob(str).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
+
     </script>
 </body>
 </html>
